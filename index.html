@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNRECOGNIZED — A Documentary Film</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Georgia+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0e0c09;
+      --paper: #f4f0e8;
+      --aged: #e8e0cc;
+      --rust: #8b3a1f;
+      --cedar: #4a3728;
+      --water: #2c4a5a;
+      --ash: #9e9488;
+      --smoke: #c8bfaf;
+      --red: #c0392b;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(14, 12, 9, 0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--smoke);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ash);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--paper);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--ink);
+      display: grid;
+      grid-template-rows: 1fr auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(14, 12, 9, 0.3) 0%, rgba(14, 12, 9, 0.7) 60%, rgba(14, 12, 9, 0.97) 100%),
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 255, 0.012) 2px,
+          rgba(255, 255, 255, 0.012) 4px);
+    }
+
+    /* Stylized Puget Sound silhouette as CSS art */
+    .hero-landscape {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background:
+        radial-gradient(ellipse 120% 60% at 50% 130%, rgba(44, 74, 90, 0.35) 0%, transparent 70%);
+    }
+
+    .hero-landscape::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background:
+        linear-gradient(to top, rgba(44, 74, 90, 0.18) 0%, transparent 100%);
+      clip-path: polygon(0 80%, 8% 65%, 15% 72%, 22% 58%, 30% 68%, 38% 50%, 45% 62%, 52% 45%, 60% 58%, 68% 40%, 75% 55%, 83% 42%, 90% 52%, 100% 38%, 100% 100%, 0 100%);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 6rem 3rem 2rem 10vw;
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .hero-dateline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-dateline::before {
+      content: '';
+      display: block;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--red);
+    }
+
+    h1 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(4.5rem, 12vw, 9rem);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--paper);
+      letter-spacing: -0.02em;
+      margin-top: -1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--smoke);
+      font-weight: 400;
+      display: block;
+      font-size: 0.52em;
+      line-height: 1.3;
+      margin-top: 0.3em;
+      letter-spacing: 0;
+    }
+
+    .hero-subhead {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--ash);
+      line-height: 1.9;
+      max-width: 460px;
+      margin-bottom: 3rem;
+      border-left: 2px solid var(--red);
+      padding-left: 1.2rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--red);
+      color: var(--paper);
+    }
+
+    .btn-ghost {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--smoke);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--paper);
+      color: var(--paper);
+    }
+
+    .hero-scroll {
+      padding: 0 3rem 3rem 10vw;
+      position: relative;
+      z-index: 2;
+    }
+
+    .scroll-indicator {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0.6;
+    }
+
+    .scroll-line {
+      width: 4rem;
+      height: 1px;
+      background: var(--ash);
+      animation: scrollpulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollpulse {
+
+      0%,
+      100% {
+        width: 4rem;
+        opacity: 0.6;
+      }
+
+      50% {
+        width: 6rem;
+        opacity: 1;
+      }
+    }
+
+    /* ── PULL QUOTE BAR ── */
+    .pull-bar {
+      background: var(--rust);
+      padding: 1.8rem 10vw;
+      overflow: hidden;
+    }
+
+    .pull-bar p {
+      font-family: 'Georgia', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-style: italic;
+      color: var(--paper);
+      line-height: 1.5;
+    }
+
+    .pull-bar span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-style: normal;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      opacity: 0.75;
+      display: block;
+      margin-top: 0.5rem;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 7rem 10vw;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 4rem;
+      height: 1px;
+      background: var(--rust);
+    }
+
+    /* ── FILM / TRAILER ── */
+    #film {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    #film .section-label {
+      color: var(--rust);
+    }
+
+    .film-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .film-text h2 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+      color: var(--paper);
+    }
+
+    .film-text p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--smoke);
+      margin-bottom: 1.5rem;
+    }
+
+    .film-meta {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .film-meta-item {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--ash);
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .film-meta-item strong {
+      color: var(--smoke);
+      font-weight: 500;
+      min-width: 80px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      background: #000;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(135deg, rgba(44, 74, 90, 0.4) 0%, rgba(74, 55, 40, 0.4) 100%),
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 255, 255, 0.015) 3px, rgba(255, 255, 255, 0.015) 4px);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .video-placeholder:hover {
+      background: linear-gradient(135deg, rgba(44, 74, 90, 0.55) 0%, rgba(139, 58, 31, 0.4) 100%);
+    }
+
+    .video-container { position: relative; width: 100%; height: 450px; }
+  .video-container iframe { width: 100%; height: 100%; border: none; }
+  
+  /* This sits on top of the video */
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    z-index: 10;
+  }
+
+    .play-btn {
+      width: 70px;
+      height: 70px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .video-placeholder:hover .play-btn {
+      border-color: var(--paper);
+      transform: scale(1.08);
+    }
+
+    .play-btn svg {
+      fill: var(--paper);
+      margin-left: 4px;
+    }
+
+    .video-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--smoke);
+    }
+
+    .video-box {
+    width: 100%;
+    max-width: 1000px; /* Increased from 900px to 1000px for a bigger display */
+    margin: 10px 0;    /* Reduced top margin to keep it closer to the text */
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* This magic number creates a perfect 16:9 ratio */
+    height: 0;
+    overflow: hidden;
+    background: #000;      /* Black bars if the video doesn't fit perfectly */
+    border: 1px solid #333; /* Subtle border to define the edges */
+}
+
+.video-container iframe,
+.video-container .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+    /* ── HISTORY ── */
+    #history {
+      background: var(--aged);
+      position: relative;
+    }
+
+    #history::before {
+      content: '1855';
+      position: absolute;
+      right: 8vw;
+      top: 4rem;
+      font-family: 'Georgia', serif;
+      font-size: 14rem;
+      font-weight: 900;
+      color: rgba(0, 0, 0, 0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .history-intro h2 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      max-width: 680px;
+      margin-bottom: 2rem;
+    }
+
+    .history-intro p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      max-width: 640px;
+      color: var(--cedar);
+      margin-bottom: 1rem;
+    }
+
+    .timeline {
+      margin-top: 5rem;
+      position: relative;
+      padding-left: 2rem;
+      border-left: 2px solid var(--smoke);
+    }
+
+    .timeline-item {
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.4rem;
+      width: 10px;
+      height: 10px;
+      background: var(--rust);
+      border-radius: 50%;
+    }
+
+    .timeline-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item h3 {
+      font-family: 'Georgia', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--cedar);
+      max-width: 560px;
+    }
+
+    /* ── ACT ── */
+    #act {
+      background: var(--water);
+      color: var(--paper);
+    }
+
+    #act .section-label {
+      color: #7ab3c8;
+    }
+
+    .act-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      margin-top: 1rem;
+    }
+
+    .act-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .act-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--rust);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .act-card:hover {
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .act-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .act-num {
+      font-family: 'Georgia', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.1);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .act-card h3 {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--paper);
+    }
+
+    .act-card p {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 1.5rem;
+    }
+
+    .act-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7ab3c8;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+
+    .act-link:hover {
+      gap: 0.9rem;
+    }
+
+    .act-link::after {
+      content: '→';
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--ink);
+      color: var(--paper);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+      padding: 7rem 10vw;
+    }
+
+    .contact-left h2 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-left p {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: var(--ash);
+      margin-bottom: 2rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-info a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--smoke);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: color 0.2s;
+    }
+
+    .contact-info a:hover {
+      color: var(--paper);
+    }
+
+    .contact-info .ci-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      min-width: 60px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--paper);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.88rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-group select option {
+      background: var(--ink);
+    }
+
+    .form-submit {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--rust);
+      color: var(--paper);
+      border: none;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+
+    .form-submit:hover {
+      background: #a04020;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080705;
+      color: var(--ash);
+      padding: 3rem 10vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .footer-left {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+    }
+
+    .footer-left strong {
+      display: block;
+      color: var(--smoke);
+      font-size: 0.7rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .footer-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      max-width: 340px;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .hero-content {
+        padding: 10rem 1.5rem 3rem;
+      }
+
+      section {
+        padding: 5rem 1.5rem;
+      }
+
+      .film-grid,
+      .act-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      #contact {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 5rem 1.5rem;
+      }
+
+      footer {
+        padding: 2rem 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-note {
+        text-align: left;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      #history::before {
+        font-size: 6rem;
+        top: 1rem;
+      }
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .reveal-delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .reveal-delay-3 {
+      transition-delay: 0.32s;
+    }
+
+    /* 1. Define the animation steps */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); } /* Start invisible and slightly lower */
+    to   { opacity: 1; transform: translateY(0); }    /* End visible and in position */
+}
+
+/* 2. Apply it to your specific text */
+h1 em {
+    display: block;
+    opacity: 0;
+    animation: fadeIn 4.5s ease-out forwards; /* Smoother, faster fade */
+    animation-delay: 0.8s; /* Waits for the background to settle first */
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Unrecognized</a>
+    <ul class="nav-links">
+      <li><a href="#film">The Film</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#act">Take Action</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-landscape"></div>
+    <div class="hero-content">
+      <div class="hero-dateline">A Documentary Film · Seattle, Washington</div>
+      <h1>
+        UNRECOGNIZED
+        <em>The Duwamish People &amp; the Fight to Exist</em>
+      </h1>
+      <p class="hero-subhead">
+        After the Point Elliott Treaty of 1855, the Duwamish were divided —
+        some forced onto reservations, others refusing to leave their homeland.
+        For the latter, the federal government has never acknowledged they exist.<br><br>
+        This is their story.
+      </p>
+<div class="video-box">
+    <div class="video-container">
+        <div class="video-overlay" onclick="this.style.display='none'">
+            <div class="play-btn">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+            </div>
+            <span class="video-label">Watch Trailer</span>
+        </div>
+
+        <iframe src="C:\Users\kman6\Videos\Unrecognized-The Duwamish Tribe - A Documentary.mp4" allowfullscreen></iframe>
+    </div>
+</div>
+    
+        <a href="#act" class="btn-ghost">Take Action</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-indicator"><span class="scroll-line"></span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- PULL QUOTE -->
+  <div class="pull-bar">
+    <p>"We never left. We are still here — on the land this city was built upon."
+      <span>— Voice from the film</span>
+    </p>
+  </div>
+
+  <!-- THE FILM -->
+  <section id="film">
+    <div class="section-label">The Film</div>
+    <div class="film-grid">
+      <div class="film-text">
+        <h2 reveal class="reveal">A People the Government Refuses to See</h2>
+        <p class="reveal reveal-delay-1"><em>Unrecognized</em> follows the descendants of Duwamish people who stayed on
+          their ancestral lands around Puget Sound after 1855 — people who did not relocate to government-designated
+          reservations, and who as a consequence have been systematically denied federal tribal recognition for over a
+          century.</p>
+        <p class="reveal reveal-delay-2">The film examines the human cost of that denial: lost land rights, no access to
+          federal services, cultural erasure — and the fierce, generational effort to make the United States acknowledge
+          what was never given up.</p>
+        <p class="reveal reveal-delay-2">It also turns an unflinching lens on a painful and rarely discussed dynamic:
+          opposition from other recognized tribal nations whose own sovereignty and resources are bound up in the
+          politics of recognition.</p>
+        <div class="film-meta reveal reveal-delay-3">
+          <div class="film-meta-item"><strong>Director</strong> [Your Name]</div>
+          <div class="film-meta-item"><strong>Runtime</strong> [XX] minutes</div>
+          <div class="film-meta-item"><strong>Setting</strong> Seattle &amp; Greater Puget Sound, WA</div>
+          <div class="film-meta-item"><strong>Status</strong> [Festival Circuit / In Production]</div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+<div class="video-box">
+    <div class="video-container">
+        <div class="video-overlay" onclick="this.style.display='none'">
+            <div class="play-btn">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+            </div>
+            <span class="video-label">Watch Trailer</span>
+        </div>
+
+        <iframe src="C:\Users\kman6\Videos\Unrecognized-The Duwamish Tribe - A Documentary.mp4" allowfullscreen></iframe>
+    </div>
+</div>
+    <span class="video-label">Watch Trailer</span>
+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="history">
+    <div class="section-label">History &amp; Context</div>
+    <div class="history-intro">
+      <h2 class="reveal">The Dispersement After 1855</h2>
+      <p class="reveal reveal-delay-1">The Point Elliott Treaty was meant to resolve the question of indigenous land in
+        the Pacific Northwest. Instead, it fractured communities — and planted the seed of an injustice that persists to
+        this day.</p>
+      <p class="reveal reveal-delay-1">Understanding the film requires understanding what happened to the Duwamish
+        people in the decades that followed.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-year">January 22, 1855</div>
+        <h3>Point Elliott Treaty Signed</h3>
+        <p>The United States and dozens of Puget Sound tribes sign the treaty at Mukilteo. Duwamish signatories cede
+          millions of acres. In exchange: a reservation — but not on their traditional homeland. Some Duwamish leaders
+          refused.</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-year">1855 – 1900s</div>
+        <h3>The Dispersement</h3>
+        <p>The promised Duwamish reservation was never established. Some families relocated to other reservations;
+          others stayed along the Duwamish River and Elliott Bay. The federal government stopped counting them.</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-year">1925 – 1970s</div>
+        <h3>Surviving Without Recognition</h3>
+        <p>Duwamish who remained on their ancestral lands built community without federal support. No health services.
+          No land rights. No legal existence as a tribe under U.S. law. Their children grew up in a city built on their
+          homeland.</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-year">1979 – 2001</div>
+        <h3>Decades of Federal Petitioning</h3>
+        <p>The Duwamish Tribal Society files for federal acknowledgment. The Bureau of Indian Affairs opens a case that
+          stretches across administrations. A decision finally comes in January 2001 — recognition is granted, then
+          reversed within days by the incoming Bush administration.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">Today</div>
+        <h3>Still Unrecognized</h3>
+        <p>The Duwamish people continue to fight for the recognition they have sought for over a century. Their
+          longhouse stands at the mouth of the Duwamish River — on land the city of Seattle acknowledges as their
+          ancestral home, yet refuses to recognize them as a sovereign people.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAKE ACTION -->
+  <section id="act">
+    <div class="section-label">Take Action</div>
+    <div class="act-grid">
+      <div class="act-card reveal">
+        <div class="act-num">01</div>
+        <h3>Learn &amp; Share</h3>
+        <p>Share the film with your community, school, or organization. Understanding this history is the first step.
+          Screening kits and discussion guides are available for educators and community groups.</p>
+        <a href="#contact" class="act-link">Request a Screening Kit</a>
+      </div>
+      <div class="act-card reveal reveal-delay-1">
+        <div class="act-num">02</div>
+        <h3>Support the Duwamish</h3>
+        <p>The Duwamish Tribal Services organization provides services to Duwamish people and works toward recognition.
+          Donations support legal advocacy, cultural preservation, and community programs.</p>
+        <a href="https://www.duwamishtribe.org" target="_blank" rel="noopener" class="act-link">Visit Duwamish Tribe</a>
+      </div>
+      <div class="act-card reveal reveal-delay-2">
+        <div class="act-num">03</div>
+        <h3>Contact Your Representatives</h3>
+        <p>Federal recognition ultimately requires congressional action or a favorable executive branch ruling. Contact
+          your U.S. senators and representatives and ask them to support Duwamish recognition.</p>
+        <a href="https://www.congress.gov/members/find-your-member" target="_blank" rel="noopener" class="act-link">Find
+          Your Representative</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div id="contact">
+    <div class="contact-left">
+      <div class="section-label" style="color:#7ab3c8">Contact &amp; Press</div>
+      <h2>For Screenings, Press &amp; Inquiries</h2>
+      <p>For press inquiries, festival submissions, educational screenings, or questions about the film, use the form or
+        reach out directly.</p>
+      <div class="contact-info">
+        <a href="mailto:press@unrecognizedfilm.com">
+          <span class="ci-label">Press</span>
+          press@unrecognizedfilm.com
+        </a>
+        <a href="mailto:screenings@unrecognizedfilm.com">
+          <span class="ci-label">Screenings</span>
+          screenings@unrecognizedfilm.com
+        </a>
+        <a href="mailto:info@unrecognizedfilm.com">
+          <span class="ci-label">General</span>
+          info@unrecognizedfilm.com
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Inquiry Type</label>
+          <select>
+            <option value="">Select one…</option>
+            <option>Press / Media</option>
+            <option>Screening Request</option>
+            <option>Educational Use</option>
+            <option>General Question</option>
+            <option>Festival / Distribution</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your inquiry…"></textarea>
+        </div>
+        <button class="form-submit">Send Message →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <strong>UNRECOGNIZED — A Documentary Film</strong>
+      © 2025 [Production Company Name]. All rights reserved.
+    </div>
+    <div class="footer-note">
+      This film was made in the traditional territory of the Duwamish people,
+      the first people of Seattle, whose connection to this land has never been extinguished.
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+
+</html> 
